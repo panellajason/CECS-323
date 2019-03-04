@@ -110,6 +110,6 @@ public class main {
             }//end finally try
         }//end try
         System.out.println("Goodbye!");
-    }//end main
+    }
 }
 

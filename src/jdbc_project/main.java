@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.Scanner;
 /**
  *
- * @author Jason
+ * @author Jason Panella
  */
 public class main {
     //  Database credentials

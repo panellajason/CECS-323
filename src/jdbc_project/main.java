@@ -263,6 +263,7 @@ public class main {
             System.out.println("-------------------------");
             System.out.println("");
     }
+    
     //#6
     public static void displaySpecifiedBook() {
         Scanner scan = new Scanner(System.in);
@@ -284,6 +285,8 @@ public class main {
                 System.out.println("No records in database match your query.");
                 System.out.println("Choose a Book Title");
                 userInput = scan.nextLine();
+                System.out.println("");
+                
                 sql = "SELECT publisher_name, group_name, book_title, year_published, number_pages, head_writer, year_formed,"
                     + "subject, publisher_address, publisher_phone, publisher_email FROM books "
                     + "NATURAL JOIN writing_groups NATURAL JOIN publishers WHERE book_title = " + "\'" + userInput + "\'";
@@ -293,8 +296,6 @@ public class main {
             
             System.out.printf(displayBooks, "Publisher Name", "Group Name", "Book Title", "Year Published", "Pages", "Head Writer", "Year Formed",
                                         "Subject", "Address", "Phone", "Email");
-            
-                //Retrieve by column name
                 String name = rs.getString("publisher_name");
                 String gname = rs.getString("group_name");
                 String book = rs.getString("book_title");
@@ -307,75 +308,17 @@ public class main {
                 String phone = rs.getString("publisher_phone");
                 String email = rs.getString("publisher_email");
 
-                //Display values
                 System.out.printf(displayBooks, dispNull(name), dispNull(gname), dispNull(book), dispNull(year), dispNull(pages), 
                         dispNull(hwriter), dispNull(yearform), dispNull(subject), dispNull(address), dispNull(phone),
                         dispNull(email));
-            
-           
-            
+                        
         }catch (SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }
-        
-        
-    }
-
-    //#6
-    public static void displaySpecifiedBook1() {
-        Scanner scan = new Scanner(System.in);
-        try {
-            prepStmt = conn.prepareStatement("SELECT * FROM books JOIN writing_groups ON book_title = ?"
-                    + "LEFT JOIN publishers ON books.publisher_name = publishers.publisher_name ORDER BY book_title");
-            System.out.println("Choose a Book Title");
-            String userInput = scan.nextLine();
-            
-            System.out.println("");
-            prepStmt.setObject(1, userInput);
-
-            String displayBooks = "%-22s%-22s%-22s%-22s%-22s%-22s%-22s%-22s%-22s%-22s%-22s\n";
-
-            ResultSet rs = prepStmt.executeQuery();
-
-            while(!rs.next()) { 
-                System.out.println("No records in database match your query.\n");
-                System.out.println("Choose a Book Title");
-                userInput = scan.nextLine();
-                System.out.println("");
-                               
-                prepStmt = conn.prepareStatement("SELECT * FROM books JOIN writing_groups ON book_title = ?"
-                    + "LEFT JOIN publishers ON books.publisher_name = publishers.publisher_name ORDER BY book_title");
-                prepStmt.setObject(1, userInput);
-                rs = prepStmt.executeQuery();
-            }
-
-            rs = prepStmt.executeQuery();
-            System.out.printf(displayBooks, "Publisher Name", "Group Name", "Book Title", "Year Published", "Pages", "Head Writer", "Year Formed",
-                        "Subject", "Address", "Phone", "Email");
-
-            while (rs.next()) {
-                String name = rs.getString("publisher_name");
-                String gname = rs.getString("group_name");
-                String book = rs.getString("book_title");
-                String year = rs.getString("year_published");
-                String pages = rs.getString("number_pages");
-                String hwriter = rs.getString("head_writer");
-                String yearform = rs.getString("year_formed");
-                String subject = rs.getString("subject");
-                String address = rs.getString("publisher_address");
-                String phone = rs.getString("publisher_phone");
-                String email = rs.getString("publisher_email");
-
-                System.out.printf(displayBooks, dispNull(name), dispNull(gname), dispNull(book), dispNull(year), dispNull(pages), 
-                        dispNull(hwriter), dispNull(yearform), dispNull(subject), dispNull(address), dispNull(phone),
-                        dispNull(email));
-            }
-        } catch (SQLException e) {
             System.out.println("Please try again");
             System.exit(0);
         }
+        System.out.println("");
     }
+
     
     //#7
     public static void insertBook () {
